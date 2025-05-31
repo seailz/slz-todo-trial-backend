@@ -92,7 +92,12 @@ public class TodoItem {
         DocumentReference itemRef = itemsRef.document(id);
 
         try {
-            return itemRef.get().get().toObject(TodoItem.class);
+            QuerySnapshot itemsSnapshot = itemsRef.get().get();
+            if (itemsSnapshot.isEmpty()) {
+                return null; // Return null if no items found
+            }
+
+            return TodoItem.fromJson(new JSONObject(itemRef.get().get().getData()));
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return null; // Return null on error
