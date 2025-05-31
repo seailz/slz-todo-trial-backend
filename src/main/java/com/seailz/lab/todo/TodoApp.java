@@ -5,6 +5,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.boot.SpringApplication;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,13 +13,14 @@ import java.io.IOException;
 /**
  * Trial task for a service team
  */
+@org.springframework.boot.autoconfigure.SpringBootApplication
 public class TodoApp {
 
     public static String GCP_PROJECT_ID = "new-b1e89"; // slzlab project
     public static Firestore GCP_PRIMARY_FIRESTORE;
 
     public static void main(String[] args) {
-        new TodoApp();
+        SpringApplication.run(TodoApp.class, args);
     }
 
     public TodoApp() {
