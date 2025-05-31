@@ -65,7 +65,7 @@ public class TodoEndpoints {
     }
 
     @PatchMapping("/todo/{id}")
-    public ResponseEntity<String> updateTodo(HttpServletRequest request, @PathVariable String id, @RequestBody String reqBody) throws ExecutionException, InterruptedException {
+    public ResponseEntity<String> updateTodo(HttpServletRequest request, @PathVariable("id") String id, @RequestBody String reqBody) throws ExecutionException, InterruptedException {
         FirebaseToken token = authorize(request);
         if (token == null) {
             return ResponseEntity.status(401).body("Unauthorized");
