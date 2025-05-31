@@ -17,6 +17,10 @@ public class TodoApp {
     public static String GCP_PROJECT_ID = "new-b1e89"; // slzlab project
     public static Firestore GCP_PRIMARY_FIRESTORE;
 
+    public static void main(String[] args) {
+        new TodoApp();
+    }
+
     public TodoApp() {
         GoogleCredentials credentials = null;
 
