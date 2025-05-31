@@ -8,6 +8,7 @@ import lombok.Data;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Data
@@ -34,6 +35,10 @@ public class TodoItem {
         String content = json.getString("content");
         boolean completed = json.getBoolean("completed");
         return new TodoItem(ownerId, id, content, completed);
+    }
+
+    public static TodoItem newTodo(String ownerId, String content) {
+        return new TodoItem(ownerId, UUID.randomUUID().toString(), content, false);
     }
 
     public void save() throws ExecutionException, InterruptedException {

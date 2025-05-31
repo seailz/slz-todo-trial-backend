@@ -58,7 +58,7 @@ public class TodoEndpoints {
             return ResponseEntity.status(400).body("Invalid JSON format");
         }
 
-        TodoItem todoItem = TodoItem.fromJson(json);
+        TodoItem todoItem = TodoItem.newTodo(token.getUid(), json.getString("content"));
         todoItem.save();
 
         return ResponseEntity.ok(todoItem.toJson().toString());
