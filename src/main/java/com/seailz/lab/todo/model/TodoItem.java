@@ -2,11 +2,14 @@ package com.seailz.lab.todo.model;
 
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.seailz.lab.todo.TodoApp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -63,7 +66,16 @@ public class TodoItem {
         CollectionReference itemsRef = colRef.collection("items");
 
         try {
-            return itemsRef.get().get().toObjects(TodoItem.class);
+            QuerySnapshot itemsSnapshot = itemsRef.get().get();
+            if (itemsSnapshot.isEmpty()) {
+                return List.of(); // Return an empty list if no items found
+            }
+            List<TodoItem> items = new ArrayList<>();
+            for (QueryDocumentSnapshot queryDocumentSnapshot : itemsSnapshot) {
+                TodoItem item = TodoItem.fromJson(new JSONObject(queryDocumentSnapshot.getData()));
+                items.add(item);
+            }
+            return items;
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return List.of(); // Return an empty list on error
